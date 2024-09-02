@@ -5,22 +5,14 @@ class AlarmClock {
 	}
 
 	addClock(time, callbackAction) {
-		if (!time) {
-			throw new Error('Время должно быть передано');
+		if (!time || !callbackAction) {
+			throw new Error('Время и функция-коллбэк должны быть переданы');
 		}
 
-		if (!callbackAction) {
-			throw new Error('Функция-коллбэк должна быть передана');
-		}
-
-		if (
-			this.alarmCollection.some(
-				(alarm) =>
-					alarm.time === time && alarm.callback === callbackAction
-			)
-		) {
-			console.warn('Будильник на это время уже существует');
-			return;
+		if (this.alarmCollection.some((alarm) => alarm.time === time)) {
+			console.warn(
+				`Будильник на ${time} уже существует, но будет добавлен ещё один.`
+			);
 		}
 
 		const alarm = {
